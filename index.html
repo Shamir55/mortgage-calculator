@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MORTGAGE CALCULATOR</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="Simple mortgage calculator with clear results, validation, and persistence." />
+</head>
+<body>
+  <div class="container">
+    <header class="header" aria-label="Header">
+      <h1>MORTGAGE CALCULATOR</h1>
+      <p class="subtitle">Enter your details to estimate your monthly repayments.</p>
+    </header>
+
+    <main class="layout" aria-label="Main content">
+      <section class="panel" aria-label="Calculator inputs">
+        <form id="form" novalidate>
+          <div class="field">
+            <label for="amount">Loan amount (£)</label>
+            <input id="amount" name="amount" type="number" inputmode="decimal" placeholder="e.g. 200000" min="1" step="0.01" required />
+            <small class="error" id="err-amount"></small>
+          </div>
+
+          <div class="field">
+            <label for="rate">Interest rate (%)</label>
+            <div class="rate-wrap">
+              <input id="rate" name="rate" type="number" inputmode="decimal" placeholder="e.g. 3.5" min="0" step="0.01" required />
+              <input id="rateRange" type="range" min="0" max="15" step="0.05" aria-label="Interest rate slider" />
+            </div>
+            <small class="hint">Tip: You can type a rate or adjust the slider.</small>
+            <small class="error" id="err-rate"></small>
+          </div>
+
+          <div class="field">
+            <label for="years">Term (years)</label>
+            <input id="years" name="years" type="number" inputmode="numeric" placeholder="e.g. 25" min="1" max="50" required />
+            <small class="error" id="err-years"></small>
+          </div>
+
+          <div class="field">
+            <label for="type">Mortgage type</label>
+            <select id="type" name="type" aria-label="Mortgage type">
+              <option value="repayment" selected>Repayment (capital + interest)</option>
+              <option value="interest-only">Interest-only (illustrative)</option>
+            </select>
+            <small class="hint">For interest-only, monthly = amount × rate / 12.</small>
+          </div>
+
+          <div class="options">
+            <label class="check">
+              <input type="checkbox" id="persist" checked />
+              Remember my inputs on this device
+            </label>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn">Calculate</button>
+            <button type="button" id="reset" class="btn btn-secondary">Reset</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel result-panel" aria-label="Results">
+        <div id="resultDefault" class="result-placeholder">
+          <p>Enter your details and click Calculate to see your results here.</p>
+        </div>
+
+        <div id="results" class="results" hidden>
+          <div class="cards">
+            <div class="card">
+              <h3>Monthly payment</h3>
+              <p class="value" id="monthly">£0.00</p>
+            </div>
+            <div class="card">
+              <h3>Total interest</h3>
+              <p class="value" id="interest">£0.00</p>
+            </div>
+            <div class="card">
+              <h3>Total repaid</h3>
+              <p class="value" id="total">£0.00</p>
+            </div>
+          </div>
+
+          <div class="breakdown">
+            <h3>Breakdown (first year)</h3>
+            <div class="legend">
+              <span class="chip principal">Principal</span>
+              <span class="chip interest">Interest</span>
+            </div>
+            <table class="table" aria-describedby="yearly breakdown">
+              <thead>
+                <tr>
+                  <th>Month</th>
+                  <th>Principal (£)</th>
+                  <th>Interest (£)</th>
+                  <th>Balance (£)</th>
+                </tr>
+              </thead>
+              <tbody id="table">
+                <!-- Filled by JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="notes">
+            <p class="note">
+              Calculations are estimates based on the information you entered and assume a constant annual rate. For exact figures and advice, please speak to a qualified adviser.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" aria-label="Footer">
+      <p>Tested for clarity, accuracy, and responsiveness. © 2025</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
